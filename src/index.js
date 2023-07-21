@@ -21,7 +21,7 @@ const todayWindText = todayContainer.querySelector("#today-wind p");
 async function getLocationData(location, days) {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=${days}&aqi=no&alerts=no`,
+      `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=${days}&aqi=no&alerts=no`,
       { mode: "cors" }
     );
 
