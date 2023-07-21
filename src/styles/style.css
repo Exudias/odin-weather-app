@@ -102,7 +102,7 @@ form input[type="submit"] {
 
   width: 100%;
 
-  background-color: #aaa;
+  background-color: skyblue;
 
   box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.5);
 
@@ -115,6 +115,8 @@ form input[type="submit"] {
   justify-content: center;
 
   box-sizing: border-box;
+
+  color: #333;
 }
 
 .today-container {
@@ -134,7 +136,7 @@ form input[type="submit"] {
 .today-div {
   flex: 1 0 0;
 
-  font-size: 64px;
+  font-size: 5vw;
 
   min-height: 0;
   display: flex;
@@ -182,7 +184,11 @@ form input[type="submit"] {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 
-  font-size: 48px;
+  font-size: 3vw;
+}
+
+.day-container:nth-child(2) {
+  background-color: #eee;
 }
 
 .day-container > * {
@@ -193,12 +199,12 @@ form input[type="submit"] {
 
 #day-precipitation {
   flex-direction: column;
-  font-size: 24px;
+  font-size: 2vw;
 }
 
 #day-temps-c,
 #day-temps-f {
-  font-size: 24px;
+  font-size: 1.2vw;
 }
 
 #day-precipitation > * {

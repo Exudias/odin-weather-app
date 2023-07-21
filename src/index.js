@@ -119,7 +119,7 @@ function displayResult(obj) {
   todayIcon.textContent = "Weather is " + obj.currentCondition.text;
 
   todayWindImg.src = WindImage;
-  todayWindText.textContent = `${obj.currentWindKPH} km/h / ${obj.currentWindMPH} mph`;
+  todayWindText.textContent = `${obj.currentWindKPH} kph / ${obj.currentWindMPH} mph`;
 
   for (let i = 0; i < dayContainers.length; i++) {
     const con = dayContainers[i];
