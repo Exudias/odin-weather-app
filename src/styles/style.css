@@ -173,7 +173,39 @@ form input[type="submit"] {
 .day-container {
   flex: 1 0 0;
   width: 100%;
+  min-height: 0;
 
   background-color: #ddd;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  font-size: 48px;
+}
+
+.day-container > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#day-precipitation {
+  flex-direction: column;
+  font-size: 24px;
+}
+
+#day-temps-c,
+#day-temps-f {
+  font-size: 24px;
+}
+
+#day-precipitation > * {
+  flex: 1 0 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

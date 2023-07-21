@@ -9,6 +9,7 @@ const formErrorField = document.querySelector("#form-error");
 
 const todayContainer = document.querySelector(".today-container");
 const multiDayContainer = document.querySelector(".multi-day-container");
+const dayContainers = multiDayContainer.querySelectorAll(".day-container");
 
 const todayName = todayContainer.querySelector("#today-name");
 const todayDegrees = todayContainer.querySelector("#today-degrees");
@@ -119,4 +120,24 @@ function displayResult(obj) {
 
   todayWindImg.src = WindImage;
   todayWindText.textContent = `${obj.currentWindKPH} km/h / ${obj.currentWindMPH} mph`;
+
+  for (let i = 0; i < dayContainers.length; i++) {
+    const con = dayContainers[i];
+    const data = obj.forecastDays[i];
+
+    const date = con.querySelector("#day-date");
+    const tempsC = con.querySelector("#day-temps-c");
+    const tempsF = con.querySelector("#day-temps-f");
+    const rain = con.querySelector("#day-rain");
+    const snow = con.querySelector("#day-snow");
+
+    const dateObj = new Date(data.date);
+    date.textContent = `${dateObj.getDate()}.${(dateObj.getMonth() + 1).toString().padStart(2, "0")}`;
+
+    tempsC.textContent = `H: ${data.highC}° C L: ${data.lowC}° C`;
+    tempsF.textContent = `H: ${data.highF}° F L: ${data.lowF}° F`;
+
+    rain.textContent = "Rain: " + data.chanceOfRain + "%";
+    snow.textContent = "Snow: " + data.chanceOfSnow + "%";
+  }
 }
