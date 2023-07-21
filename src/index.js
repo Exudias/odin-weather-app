@@ -1,10 +1,21 @@
 import "./styles/style.css";
+import WindImage from "./images/wind.png";
 
 const API_KEY = "8ba4e980a5c44bdfbb981113232107"; // it's a free key, I know it's not secured
 
 const searchForm = document.querySelector("#search-form");
 const locationInput = document.querySelector("#location-input");
 const formErrorField = document.querySelector("#form-error");
+
+const todayContainer = document.querySelector(".today-container");
+const multiDayContainer = document.querySelector(".multi-day-container");
+
+const todayName = todayContainer.querySelector("#today-name");
+const todayDegrees = todayContainer.querySelector("#today-degrees");
+const todayIcon = todayContainer.querySelector("#today-icon");
+
+const todayWindImg = todayContainer.querySelector("#today-wind img");
+const todayWindText = todayContainer.querySelector("#today-wind p");
 
 async function getLocationData(location, days) {
   try {
@@ -85,7 +96,6 @@ searchForm.onsubmit = async (e) => {
   const inputValue = locationInput.value;
 
   if (!inputValue) {
-    formErrorField.textContent = "";
     return;
   }
 
@@ -93,7 +103,20 @@ searchForm.onsubmit = async (e) => {
   if (result) {
     console.log(result);
     formErrorField.textContent = "Showing results for: " + result.name;
+    displayResult(result);
   } else {
-    formErrorField.textContent = "Location not found!";
+    formErrorField.textContent =
+      "Location not found! Try searching for a city...";
   }
 };
+
+function displayResult(obj) {
+  todayName.textContent = obj.name;
+
+  todayDegrees.textContent = `${obj.currentTempC}° C / ${obj.currentTempF}° F`;
+
+  todayIcon.textContent = "Weather is " + obj.currentCondition.text;
+
+  todayWindImg.src = WindImage;
+  todayWindText.textContent = `${obj.currentWindKPH} km/h / ${obj.currentWindMPH} mph`;
+}
