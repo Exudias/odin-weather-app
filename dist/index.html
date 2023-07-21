@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+  <script defer src="main.js"></script></head>
+  <body>
+    <div class="search-container">
+      <form id="search-form">
+        <input
+          type="text"
+          id="location-input"
+          placeholder="Enter a location..."
+        />
+      </form>
+      <div id="form-error"></div>
+    </div>
+    <div class="main-container">
+      <div class="today-container">
+        <div class="today-div" id="today-name">Nothing searched yet...</div>
+        <div class="today-div" id="today-degrees">Enter a location!</div>
+        <div class="today-div" id="today-icon">
+          Let's see how the weather is...
+        </div>
+        <div class="today-div" id="today-wind">
+          <img />
+          <p>You might be surprised.</p>
+        </div>
+      </div>
+      <div class="multi-day-container">
+        <div class="day-container">
+          <div id="day-date"></div>
+          <div id="day-temps-c"></div>
+          <div id="day-precipitation">
+            <div id="day-rain"></div>
+            <div id="day-snow"></div>
+          </div>
+          <div id="day-temps-f"></div>
+        </div>
+        <div class="day-container">
+          <div id="day-date"></div>
+          <div id="day-temps-c"></div>
+          <div id="day-precipitation">
+            <div id="day-rain"></div>
+            <div id="day-snow"></div>
+          </div>
+          <div id="day-temps-f"></div>
+        </div>
+        <div class="day-container">
+          <div id="day-date"></div>
+          <div id="day-temps-c"></div>
+          <div id="day-precipitation">
+            <div id="day-rain"></div>
+            <div id="day-snow"></div>
+          </div>
+          <div id="day-temps-f"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
