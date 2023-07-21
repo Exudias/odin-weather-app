@@ -2,6 +2,10 @@ import "./styles/style.css";
 
 const API_KEY = "8ba4e980a5c44bdfbb981113232107"; // it's a free key, I know it's not secured
 
+const searchForm = document.querySelector("#search-form");
+const locationInput = document.querySelector("#location-input");
+const formErrorField = document.querySelector("#form-error");
+
 async function getLocationData(location, days) {
   try {
     const response = await fetch(
@@ -76,4 +80,15 @@ function parseForecastDayJSON(json) {
   return obj;
 }
 
-console.log(objectFromWeatherJSON(await getLocationData("London", 3)));
+searchForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const result = objectFromWeatherJSON(
+    await getLocationData(locationInput.value)
+  );
+  if (result) {
+    console.log(result);
+    formErrorField.textContent = "";
+  } else {
+    formErrorField.textContent = "Location not found!";
+  }
+};
