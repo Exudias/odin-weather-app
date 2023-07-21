@@ -22,6 +22,10 @@ async function getLocationData(location, days) {
 }
 
 function objectFromWeatherJSON(json) {
+  if (!json) {
+    return null;
+  }
+
   let obj = {};
 
   obj.name = json.location.name;
@@ -57,7 +61,7 @@ function parseForecastDayJSON(json) {
 
   obj.condition = {
     icon: json.day.condition.icon,
-    text: json.day.condition.text
+    text: json.day.condition.text,
   };
 
   obj.chanceOfRain = json.day.daily_chance_of_rain;
@@ -68,7 +72,7 @@ function parseForecastDayJSON(json) {
 
   obj.lowC = json.day.mintemp_c;
   obj.lowF = json.day.mintemp_f;
-  
+
   return obj;
 }
 
