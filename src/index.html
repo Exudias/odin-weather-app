@@ -6,11 +6,23 @@
     <title>Weather App</title>
   </head>
   <body>
-    <form id="search-form">
-      <label for="location-input">Location</label>
-      <input type="text" id="location-input" required />
-      <input type="submit" value="Search" />
-      <span id="form-error"></span>
-    </form>
+    <div class="search-container">
+      <form id="search-form">
+        <input
+          type="text"
+          id="location-input"
+          placeholder="Enter a location..."
+        />
+      </form>
+      <div id="form-error"></div>
+    </div>
+    <div class="main-container">
+      <div class="today-container"></div>
+      <div class="multi-day-container">
+        <div class="day-container"></div>
+        <div class="day-container"></div>
+        <div class="day-container"></div>
+      </div>
+    </div>
   </body>
 </html>

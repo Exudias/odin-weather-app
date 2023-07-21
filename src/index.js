@@ -82,12 +82,17 @@ function parseForecastDayJSON(json) {
 
 searchForm.onsubmit = async (e) => {
   e.preventDefault();
-  const result = objectFromWeatherJSON(
-    await getLocationData(locationInput.value)
-  );
+  const inputValue = locationInput.value;
+
+  if (!inputValue) {
+    formErrorField.textContent = "";
+    return;
+  }
+
+  const result = objectFromWeatherJSON(await getLocationData(inputValue, 3));
   if (result) {
     console.log(result);
-    formErrorField.textContent = "";
+    formErrorField.textContent = "Showing results for: " + result.name;
   } else {
     formErrorField.textContent = "Location not found!";
   }
