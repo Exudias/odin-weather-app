@@ -1,7 +1,8 @@
 import "./styles/style.css";
 import WindImage from "./images/wind.png";
 
-const API_KEY = "8ba4e980a5c44bdfbb981113232107"; // it's a free key, I know it's not secured
+const WEATHER_API_KEY = "8ba4e980a5c44bdfbb981113232107"; // it's a free key, I know it's not secured
+const GIPHY_API_KEY = "L5iqJI71fX0PzFwjcoVYFRVAPo9SC8il"; // once again, a free key
 
 const searchForm = document.querySelector("#search-form");
 const locationInput = document.querySelector("#location-input");
@@ -21,7 +22,7 @@ const todayWindText = todayContainer.querySelector("#today-wind p");
 async function getLocationData(location, days) {
   try {
     const response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=${days}&aqi=no&alerts=no`,
+      `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${location}&days=${days}&aqi=no&alerts=no`,
       { mode: "cors" }
     );
 
@@ -89,7 +90,36 @@ function parseForecastDayJSON(json) {
   obj.lowC = json.day.mintemp_c;
   obj.lowF = json.day.mintemp_f;
 
+  obj.condition = json.day.condition.text;
+
   return obj;
+}
+
+async function getGifJSONFromPrompt(prompt) {
+  try {
+    const response = await fetch(
+      `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${prompt}&limit=1&offset=0&rating=g&lang=en&bundle=messaging_non_clips`,
+      { mode: "cors" }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+function URLFromGifJSON(json) {
+  if (!json) {
+    return null;
+  }
+
+  return json.data[0].images.original.url;
 }
 
 searchForm.onsubmit = async (e) => {
@@ -111,12 +141,15 @@ searchForm.onsubmit = async (e) => {
   }
 };
 
-function displayResult(obj) {
+async function displayResult(obj) {
   todayName.textContent = obj.name;
 
   todayDegrees.textContent = `${obj.currentTempC}° C / ${obj.currentTempF}° F`;
 
-  todayIcon.textContent = "Weather is " + obj.currentCondition.text;
+  todayIcon.textContent = obj.currentCondition.text;
+
+  const weatherGifURL = URLFromGifJSON(await getGifJSONFromPrompt(obj.currentCondition.text));
+  todayContainer.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${weatherGifURL})`;
 
   todayWindImg.src = WindImage;
   todayWindText.textContent = `${obj.currentWindKPH} kph / ${obj.currentWindMPH} mph`;
@@ -131,8 +164,14 @@ function displayResult(obj) {
     const rain = con.querySelector("#day-rain");
     const snow = con.querySelector("#day-snow");
 
+    const bgGifURL = URLFromGifJSON(await getGifJSONFromPrompt(data.condition));
+
+    con.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(${bgGifURL})`;
+
     const dateObj = new Date(data.date);
-    date.textContent = `${dateObj.getDate()}.${(dateObj.getMonth() + 1).toString().padStart(2, "0")}`;
+    date.textContent = `${dateObj.getDate()}.${(dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}`;
 
     tempsC.textContent = `H: ${data.highC}° C L: ${data.lowC}° C`;
     tempsF.textContent = `H: ${data.highF}° F L: ${data.lowF}° F`;
@@ -141,3 +180,14 @@ function displayResult(obj) {
     snow.textContent = "Snow: " + data.chanceOfSnow + "%";
   }
 }
+
+(async function initialize() {
+  const result = objectFromWeatherJSON(await getLocationData("London", 3));
+  if (result) {
+    formErrorField.textContent = "Showing results for: " + result.name;
+    displayResult(result);
+  } else {
+    formErrorField.textContent =
+      "Location not found! Try searching for a city...";
+  }
+})();

@@ -131,6 +131,11 @@ form input[type="submit"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  color: #ccc;
 }
 
 .today-div {
@@ -185,6 +190,8 @@ form input[type="submit"] {
   grid-template-rows: 1fr 1fr;
 
   font-size: 3vw;
+
+  color: #ccc;
 }
 
 .day-container:nth-child(2) {
